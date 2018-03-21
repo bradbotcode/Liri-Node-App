@@ -6,14 +6,14 @@ var Twitter = require('twitter');
 var spotify = require('spotify');
 var keys = require("./keys.js");
 var fs = require("fs");
-
+// var used for terminal command if/elses
 var liriArg = process.argv[2];
 
 //terminal commands
 if (liriArg === "my-tweets") {
     tweets();
 } else if (liriArg === "spotify-this-song") {
-
+    song();
 } else if (liriArg === "movie-this") {
     movie();
 } else if (liriArg === "do-what-it-says") {
@@ -55,7 +55,9 @@ function movie() {
             console.log("Plot: " + JSON.parse(body).Plot);
             console.log("Actors: " + JSON.parse(body).Actors);
             console.log("-------------------------------------------------------------------------------------------");
-        };
+        } else {
+            console.log("ya' messed up");
+        }
     });
 };
 
@@ -67,7 +69,7 @@ function tweets() {
         screen_name: "@bhferrell",
         count: 20
     };
-    //used to show someone else's recent tweets as a 4th argument
+    //used as a 4th argument to show someone else's tweets, if you so choose
     params.screen_name = process.argv[3];
 
     client.get('statuses/user_timeline', params, function (error, tweets, response) {
@@ -80,11 +82,40 @@ function tweets() {
             }
             //you can choose to show someone else's recent Tweets in place of mine by providing a 4th argument
             if (process.argv.length < 4) {
-                console.log("***To view someone else's recent tweets, add a 4th argument after my-tweets that is your desired person's twitter handle!***")
+                console.log("***To view someone else's recent tweets, add a 4th argument after the my-tweets command, that is your desired person's twitter handle!***")
             }
 
         } else {
-            console.log("Error occurred");
+            console.log("ya' messed up");
         }
     });
+}
+
+//function to show spotify data
+function song() {
+
+    var spotify = new Spotify(keys.spotify);
+    var args = process.argv;
+    var songName = "";
+
+    for (i = 3; i < args.length; i++) {
+        if (i > 3 && i < args.length) {
+            songName = songName + " " + args[i];
+        } else {
+            songName = args[i];
+        }
+    };
+
+    spotify.search({
+        type: 'track',
+        query: songName
+    }, function (err, data) {
+        if (err) {
+            console.log('Error occurred: ' + err);
+            return;
+        }
+
+        console.log(data[0]);
+    });
+
 }
