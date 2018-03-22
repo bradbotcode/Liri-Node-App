@@ -106,7 +106,7 @@ function song() {
     };
     //console.log(songName);
     if (args.length < 4) {
-        songName = "the sign"
+        songName = "the sign ace of base"
         process.argv[3] = songName;
     }
     //console.log(songName);
