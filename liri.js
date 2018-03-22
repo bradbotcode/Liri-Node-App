@@ -3,7 +3,7 @@ require("dotenv").config();
 //node module imports needed for functions
 var request = require("request");
 var Twitter = require('twitter');
-var spotify = require('spotify');
+var Spotify = require('node-spotify-api');
 var keys = require("./keys.js");
 var fs = require("fs");
 // var used for terminal command if/elses
@@ -17,7 +17,7 @@ if (liriArg === "my-tweets") {
 } else if (liriArg === "movie-this") {
     movie();
 } else if (liriArg === "do-what-it-says") {
-
+    doSome();
 } else {
     console.log("Please enter one of the following commands: my-tweets, spotify-this-song, movie-this, do-what-it-says.");
 }
@@ -66,7 +66,7 @@ function tweets() {
 
     var client = new Twitter(keys.twitter);
     var params = {
-        screen_name: "@bhferrell",
+        screen_name: "bhferrell",
         count: 20
     };
     //used as a 4th argument to show someone else's tweets, if you so choose
@@ -84,12 +84,11 @@ function tweets() {
             if (process.argv.length < 4) {
                 console.log("***To view someone else's recent tweets, add a 4th argument after the my-tweets command, that is your desired person's twitter handle!***")
             }
-
         } else {
             console.log("ya' messed up");
         }
     });
-}
+};
 
 //function to show spotify data
 function song() {
@@ -105,17 +104,42 @@ function song() {
             songName = args[i];
         }
     };
-
+    //console.log(songName);
+    if (args.length < 4) {
+        songName = "the sign"
+        process.argv[3] = songName;
+    }
+    //console.log(songName);
     spotify.search({
-        type: 'track',
-        query: songName
+        type: "track",
+        query: songName,
+        limit: 1
     }, function (err, data) {
         if (err) {
-            console.log('Error occurred: ' + err);
+            console.log("ya' messed up: " + err);
             return;
         }
-
-        console.log(data[0]);
+        console.log("-------------------------------------------------------------------------------------------");
+        console.log("Artist: " + data.tracks.items[0].album.artists[0].name);
+        console.log("Song: " + data.tracks.items[0].name);
+        console.log("Preview link: " + data.tracks.items[0].external_urls.spotify);
+        console.log("Album: " + data.tracks.items[0].album.name);
+        console.log("-------------------------------------------------------------------------------------------");
     });
+};
 
-}
+//random fs function
+function doSome() {
+
+    fs.readFile("random.txt", "utf8", function (error, data) {
+        if (error) {
+            return console.log(error);
+        }
+        var data = data.split(',');
+
+        if (data[0] === "spotify-this-song") {
+            process.argv[3] = data[1];
+            song();
+        }
+    })
+};
