@@ -13,21 +13,21 @@ do-what-it-says
 ### What Each Command Does:
 
 #### my-tweets
-Retrieves up to your latest 20 tweets:
+Retrieves my 20 most recent tweets.
 Will also take an alternative twitter handle as a fourth argument to show someone else's tweets.
 ```
 node liri.js my-tweets
 ```
 
 #### spotify-this-song
-Retrieves song information for a track:
+Retrieves song information for a track.
 If no argument is passed, song defaults to "The Sign" by Ace of Base.
 ```
 node liri.js spotify-this-song <song name>
 ```
 
 #### movie-this
-Retrieves movie information for a movie:
+Retrieves movie information for a movie.
 If no argument is passed, movie defaults to "Mr. Nobody".
 ```
 node liri.js movie-this <movie name>
