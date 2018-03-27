@@ -10,33 +10,27 @@ do-what-it-says
 
 What Each Command Does:
 
+my-tweets
+Retrieves up to your latest 20 tweets:
+Will also take an alternative twitter handle as a fourth argument to show someone else's tweets.
+
 node liri.js my-tweets
-Displays my last 20 tweets and when they were created in terminal/bash window. I actually don't have 20 tweets on my personal account 
-so this argument will notify the user that if they pass a 4th argument equal to any twitter handle, it will show that handle's 20 most 
-recent tweets. 
+
+spotify-this-song
+Retrieves song information for a track:
+If no argument is passed, song defaults to "The Sign" by Ace of Base.
 
 node liri.js spotify-this-song <song name>
-Shows the following information about the song in terminal/bash window:
-Artist
-The song's name
-A preview link of the song from Spotify
-The album that the song is from
-If you do not pass a song as a fourth argument, it will default to "The Sign" by Ace of Base.
+
+movie-this
+Retrieves movie information for a movie:
+If no argument is passed, movie defaults to "Mr. Nobody".
 
 node liri.js movie-this <movie name>
-Shows the following information in terminal/bash:
-Title of the movie.
-Year the movie came out.
-IMDB Rating of the movie.
-Country where the movie was produced.
-Language of the movie.
-Plot of the movie.
-Actors in the movie.
-Rotten Tomatoes Rating.
-Rotten Tomatoes URL.
-If no movie is passed as a fourth argument, it will default to "Mr. Nobody"
+
+do-what-it-says
+Takes info from random.txt (a song) and performs spotify-this-song:
 
 node liri.js do-what-it-says
-Takes the text from random.txt and runs the content (song information) through the spotify-this-song command.
 
 
